@@ -355,6 +355,61 @@ const people = [
 ];
 
 // eslint-disable-next-line no-console
-console.log(people); // you can remove it
+const table = document.querySelector('tbody');
 
-// write your code here
+function addCells(person, tableElem) {
+  const tr = tableElem.appendChild(document.createElement('tr'));
+
+  for (let i = 0; i < Object.keys(person).length; i++) {
+    const res = Object.values(person).some((properValue) => {
+      if (typeof properValue === 'string' || typeof properValue === 'number') {
+        return false;
+      }
+
+      return false;
+    });
+
+    if (res) {
+      return 'Type of data is invalid';
+    }
+
+    const value = person[Object.keys(person)[i]];
+    let content;
+
+    if (i === 6) {
+      break;
+    } else if (i === 4) {
+      content = Number(person['died']) - Number(person['born']);
+
+      if (content < 0) {
+        tr.remove(0);
+      }
+    } else if (i === 5) {
+      content = Math.ceil(person['died'] / 100);
+
+      if (typeof content !== 'number') {
+        tr.remove();
+      }
+    } else if (i === 1) {
+      if (value === 'm') {
+        content = 'Male';
+      } else if (value === 'f') {
+        content = 'Female';
+      } else {
+        tr.remove();
+      }
+    } else {
+      content = value;
+    }
+
+    const td = document.createElement('td');
+
+    td.textContent = content;
+
+    tr.appendChild(td);
+  }
+}
+
+for (const personFromList of people) {
+  addCells(personFromList, table);
+}
