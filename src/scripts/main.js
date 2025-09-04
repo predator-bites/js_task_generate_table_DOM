@@ -1,9 +1,9 @@
 'use strict';
+import people from './lib/people.json';
 
 // eslint-disable-next-line no-console
 const bigTable = document.querySelector('.dashboard');
-const table = bigTable.querySelector('tbody');
-const data = require('./lib/people.json');
+const table = bigTable.querySelector('tbody') || bigTable;
 
 function addCells(person, tableElem) {
   const tr = tableElem.appendChild(document.createElement('tr'));
@@ -14,12 +14,12 @@ function addCells(person, tableElem) {
   const lived = document.createElement('td');
   const century = document.createElement('td');
 
-  nameTd.textContent = person['name'];
-  sexTd.textContent = person['sex'];
-  born.textContent = person['born'];
-  died.textContent = person['died'];
-  lived.textContent = person['died'] - person['born'];
-  century.textContent = Math.ceil(person['died'] / 100);
+  nameTd.textContent = person.name;
+  sexTd.textContent = person.sex;
+  born.textContent = person.born;
+  died.textContent = person.died;
+  lived.textContent = person.died - person.born;
+  century.textContent = Math.ceil(person.died / 100);
 
   tr.appendChild(nameTd);
   tr.appendChild(sexTd);
@@ -29,6 +29,6 @@ function addCells(person, tableElem) {
   tr.appendChild(century);
 }
 
-for (const personFromList of data) {
+for (const personFromList of people) {
   addCells(personFromList, table);
 }
